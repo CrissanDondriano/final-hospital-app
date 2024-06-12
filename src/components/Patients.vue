@@ -1,10 +1,36 @@
 <template>
-<div class="container">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm bg-dark">
+    <!-- Container wrapper -->
+    <div class="container">
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" @click="goToDashboard">Dashboard</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" v-if="user">
+                        <a class="nav-link text-white" v-if="user.role === 'doctor'">Dr. {{ user.name }}</a>
+                        <a class="nav-link text-white" v-if="user.role === 'admin'">Admin. {{ user.name }}</a>
+                        <a class="nav-link text-white" v-if="user.role === 'patient'">Patient. {{ user.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<div class="container-wrapper">
     <h1 class="title">Manage Patients</h1>
 
     <div class="actions">
         <button v-if="user.role === 'admin'" @click="showAddPatientForm = true" class="btn add-btn">Add Patient</button>
-        <button @click="fetchPatients" class="btn load-btn">Load Patients</button>
     </div>
 
     <div v-if="showAddPatientForm" class="form-container">
@@ -26,16 +52,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="patient in patients" :key="patient.id">
-                    <td>{{ patient.name }}</td>
-                    <td>{{ patient.email }}</td>
-                    <td v-if="user.role === 'admin' || user.role === 'doctor'">
-                        <button @click="editPatient(patient)" class="btn edit-btn">Edit</button>
-                    </td>
-                    <td v-if="user.role === 'admin'">
-                        <button @click="deletePatient(patient.id)" class="btn delete-btn">Delete</button>
-                    </td>
-                </tr>
+                <template v-if="patients.length > 0">
+                    <tr v-for="patient in patients" :key="patient.id">
+                        <td>{{ patient.name }}</td>
+                        <td>{{ patient.email }}</td>
+                        <td v-if="user.role === 'admin' || user.role === 'doctor'">
+                            <button @click="editPatient(patient)" class="btn edit-btn">Edit</button>
+                        </td>
+                        <td v-if="user.role === 'admin'">
+                            <button @click="deletePatient(patient.id)" class="btn delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="4">No records available</td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -74,6 +107,9 @@ export default {
         },
     },
     methods: {
+        goToDashboard() {
+            this.$router.push('/dashboard');
+        },
         async fetchPatients() {
             try {
                 const response = await axios.get(this.$store.state.apiUrl + '/patients', {
@@ -93,6 +129,7 @@ export default {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 });
+                this.fetchPatients();
                 this.patients.push(response.data);
                 this.newPatient = {
                     name: '',
@@ -136,22 +173,26 @@ export default {
                 console.error('Failed to delete patient', error);
             }
         }
-    }
+    },
+    created() {
+        this.fetchPatients();
+    },
 };
 </script>
 
 <style scoped>
-.container {
+.container-wrapper {
     background-image: url('https://www.softclinicsoftware.com/wp-content/uploads/2022/05/medical-report-with-medical-equipment.jpg');
     padding: 30px;
     background-color: rgba(255, 255, 255, 0.459);
     /* Semi-transparent background */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
     margin: 50px auto;
     background-size: cover;
     background-position: center;
+    height: 100vh;
+    width: 100vh;
 }
 
 .title {

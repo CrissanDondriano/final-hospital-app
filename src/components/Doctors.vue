@@ -1,10 +1,36 @@
 <template>
-<div class="container">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm bg-dark">
+    <!-- Container wrapper -->
+    <div class="container">
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" @click="goToDashboard">Dashboard</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" v-if="user">
+                        <a class="nav-link text-white" v-if="user.role === 'doctor'">Dr. {{ user.name }}</a>
+                        <a class="nav-link text-white" v-if="user.role === 'admin'">Admin. {{ user.name }}</a>
+                        <a class="nav-link text-white" v-if="user.role === 'patient'">Patient. {{ user.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<div class="container-wrapper">
     <h1 class="title">Manage Doctors</h1>
 
     <div class="actions">
         <button v-if="user && user.role === 'admin'" @click="showAddDoctorForm = true" class="btn add-btn">Add Doctor</button>
-        <button @click="fetchDoctors" class="btn load-btn">Load Doctors</button>
     </div>
 
     <div v-if="showAddDoctorForm" class="form-container">
@@ -26,14 +52,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="doctor in doctors" :key="doctor.id">
-                    <td v-if="user.role === 'admin' || doctor.user_id === user.id">{{ doctor.name }}</td>
-                    <td v-if="user.role === 'admin' || doctor.user_id === user.id">{{ doctor.email }}</td>
-                    <td v-if="user.role === 'admin' || doctor.user_id === user.id">
-                        <button @click="editDoctor(doctor)" class="btn edit-btn">Edit</button>
-                        <button @click="deleteDoctor(doctor.id)" class="btn delete-btn">Delete</button>
-                    </td>
-                </tr>
+                <template v-if="doctors.length > 0">
+                    <tr v-for="doctor in doctors" :key="doctor.id">
+                        <td v-if="user.role === 'admin' || doctor.user_id === user.id">{{ doctor.name }}</td>
+                        <td v-if="user.role === 'admin' || doctor.user_id === user.id">{{ doctor.email }}</td>
+                        <td v-if="user.role === 'admin' || doctor.user_id === user.id">
+                            <button @click="editDoctor(doctor)" class="btn edit-btn">Edit</button>
+                            <button v-if="user.role === 'admin'" @click="deleteDoctor(doctor.id)" class="btn delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="3">No data records available.</td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -72,6 +105,9 @@ export default {
         },
     },
     methods: {
+        goToDashboard() {
+            this.$router.push('/dashboard');
+        },
         async fetchDoctors() {
             try {
                 const response = await axios.get(this.$store.state.apiUrl + '/doctors', {
@@ -145,17 +181,18 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.container-wrapper {
     background-image: url('https://www.softclinicsoftware.com/wp-content/uploads/2022/05/medical-report-with-medical-equipment.jpg');
     padding: 30px;
     background-color: rgba(255, 255, 255, 0.459);
     /* Semi-transparent background */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
     margin: 50px auto;
     background-size: cover;
     background-position: center;
+    height: 100vh;
+    width: 100vh;
 }
 
 .title {
