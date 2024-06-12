@@ -1,14 +1,17 @@
 <template>
     <br>
     <div class="container">
+         <!-- Title Page -->
         <h1 class="title">Manage Medical Records</h1>
-
         <div class="actions">
+             <!-- Add Record Button -->
             <button v-if="user.role === 'doctor'" @click="showAddRecordForm = true" class="btn add-btn">Add
                 Record</button>
+             <!-- Load Record Button -->
             <button @click="fetchRecords" class="btn load-btn">Load Records</button>
         </div>
 
+        <!-- Adding New Record -->
         <div v-if="showAddRecordForm" class="form-container">
             <h2>Add New Record</h2>
             <form @submit.prevent="addRecord">
@@ -23,6 +26,7 @@
             </form>
         </div>
 
+         <!-- table of medical records-->
         <div class="table-container">
             <table class="table-custom">
                 <thead>
@@ -102,6 +106,7 @@ export default {
                 console.error('Failed to fetch records', error);
             }
         },
+        // Adding Record
         async addRecord() {
             try {
                 const response = await axios.post(this.$store.state.apiUrl + '/records', this.newRecord, {
@@ -126,6 +131,7 @@ export default {
             };
             this.showEditRecordForm = true;
         },
+        // Updating Record
         async updateRecord() {
             try {
                 const response = await axios.put(this.$store.state.apiUrl + `/records/${this.currentRecord.id}`, this.currentRecord, {
@@ -141,6 +147,7 @@ export default {
                 console.error('Failed to update record', error);
             }
         },
+        // Deleting Record
         async deleteRecord(id) {
             try {
                 await axios.delete(this.$store.state.apiUrl + `/records/${id}`, {
