@@ -142,31 +142,34 @@ export default {
 
 <style scoped>
 .container {
-    background-image: url('https://www.softclinicsoftware.com/wp-content/uploads/2022/05/medical-report-with-medical-equipment.jpg'); 
+    background-image: url('https://www.softclinicsoftware.com/wp-content/uploads/2022/05/medical-report-with-medical-equipment.jpg');
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.459); /* Semi-transparent background */
+    background-color: rgba(255, 255, 255, 0.459);
+    /* Semi-transparent background */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 50px auto;
-    background-size: cover; 
-    background-position: center; 
+    background-size: cover;
+    background-position: center;
 }
 
 .title {
     text-align: center;
-    font-size: 32px; 
+    font-size: 32px;
     color: #ffffff;
     margin-bottom: 20px;
     font-weight: bold;
     text-shadow: 2px 2px 4px #000000;
-    
+
 }
 
 .title span {
     border: 2px solid #333;
-    padding: 2px; /* Adjust padding as needed */
-    margin: 0 2px; /* Adjust margin as needed */
+    padding: 2px;
+    /* Adjust padding as needed */
+    margin: 0 2px;
+    /* Adjust margin as needed */
 }
 
 .actions {
@@ -243,7 +246,8 @@ export default {
     padding: 20px;
     border: 1px solid #547c63;
     border-radius: 5px;
-    background-color: rgba(231, 247, 237, 0.8); /* Semi-transparent background */
+    background-color: rgba(231, 247, 237, 0.8);
+    /* Semi-transparent background */
 }
 
 form input {
