@@ -139,3 +139,139 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.container {
+    background-image: url('https://www.softclinicsoftware.com/wp-content/uploads/2022/05/medical-report-with-medical-equipment.jpg'); 
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.459); /* Semi-transparent background */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 50px auto;
+    background-size: cover; 
+    background-position: center; 
+}
+
+.title {
+    text-align: center;
+    font-size: 32px; 
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+    
+}
+
+.title span {
+    border: 2px solid #333;
+    padding: 2px; /* Adjust padding as needed */
+    margin: 0 2px; /* Adjust margin as needed */
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #4facfe;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #00f2fe;
+}
+
+.add-btn {
+    background-color: #28a745;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+.load-btn {
+    background-color: #007bff;
+}
+
+.load-btn:hover {
+    background-color: #2870bd;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid #143a54;
+}
+
+.table-custom th,
+.table-custom td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #413c3c;
+}
+
+.table-custom th {
+    background-color: #2f74b1;
+    color: white;
+}
+
+.table-custom tr {
+    background-color: #f2f2f2;
+}
+
+.table-custom tr:hover {
+    background-color: #e4eef8;
+}
+
+.form-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #547c63;
+    border-radius: 5px;
+    background-color: rgba(231, 247, 237, 0.8); /* Semi-transparent background */
+}
+
+form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+form button {
+    width: 100%;
+}
+
+.edit-btn {
+    background-color: #ffc107;
+}
+
+.edit-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+</style>
